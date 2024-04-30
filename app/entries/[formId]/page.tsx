@@ -19,7 +19,7 @@ async function getForms() {
     return data;
 }
 
-export default async function Entries() {
+export default async function Entries({ params }) {
     const forms = await getForms();
 
     return (
@@ -57,7 +57,7 @@ export default async function Entries() {
                     <div className="flex items-center justify-between">
                         <h1 className="text-lg font-semibold md:text-2xl">Entries</h1>
 
-                        {forms && forms.length ? <FormSelect forms={forms} /> : null}
+                        {forms && forms.length ? <FormSelect forms={forms} defaultValue={params.formId * 1} /> : null}
                     </div>
                     <div
                         className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
