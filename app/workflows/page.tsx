@@ -6,7 +6,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { SidebarNav } from "@/components/SidebarNav";
 import { MobileNav } from "@/components/MobileNav";
 
-export default function Dashboard() {
+export default function Forms() {
     return (
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
             <div className="hidden border-r bg-muted/40 md:block">
@@ -40,7 +40,10 @@ export default function Dashboard() {
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
                     <div className="flex items-center">
-                        <h1 className="text-lg font-semibold md:text-2xl">Dashboard</h1>
+                        <h1 className="text-lg font-semibold md:text-2xl">Workflows</h1>
+                        <Button asChild className="ml-auto">
+                            <Link href="/forms">Add Workflow</Link>
+                        </Button>
                     </div>
                     <div
                         className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"

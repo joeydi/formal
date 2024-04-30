@@ -13,7 +13,23 @@ export function LoginForm() {
     const [state, action] = useFormState(login, undefined);
 
     if (state?.redirect) {
-        router.push(state.redirect);
+        // Redirect the user to the callbackUrl param if present
+        if (state.redirect.indexOf("?") !== -1) {
+            const params = new URLSearchParams(state.redirect.split("?")[1]);
+            const callbackUrl = params.get("callbackUrl");
+
+            if (callbackUrl) {
+                return router.push(callbackUrl);
+            }
+        }
+
+        // If the user came directly to the /login pages, redirect them to the homepage
+        if (state.redirect.indexOf("/login") !== -1) {
+            return router.push("/");
+        }
+
+        // Otherwise redirect to the URL
+        return router.push(state.redirect);
     }
 
     return (

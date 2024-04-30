@@ -15,18 +15,18 @@ type FormState =
 
 export async function login(state: FormState, formData: FormData) {
     try {
-        await signIn("credentials", {
+        const result = await signIn("credentials", {
             email: formData.get("email"),
             password: formData.get("password"),
-            redirectTo: "/",
             redirect: false,
         });
+
+        console.log({ result });
+
         return {
-            redirect: "/",
+            redirect: result,
         };
     } catch (error) {
-        console.log({ error });
-
         return {
             message: "There was an error logging in.",
         };

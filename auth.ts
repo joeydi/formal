@@ -5,15 +5,13 @@ import Credentials from "next-auth/providers/credentials";
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
         Credentials({
-            // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-            // e.g. domain, username, password, 2FA token, etc.
             credentials: {
                 email: {},
                 password: {},
             },
             authorize: async (credentials) => {
                 try {
-                    const response = await axios.post(`${process.env.NEXTAUTH_BACKEND_URL}auth/login/`, credentials);
+                    const response = await axios.post(`${process.env.NEXTAUTH_BACKEND_URL}/auth/login/`, credentials);
                     const data = response.data;
 
                     if (data?.user) {
@@ -31,9 +29,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         authorized({ request, auth }) {
             const { pathname } = request.nextUrl;
 
-            console.log({ pathname });
+            const restrictedPaths = ["/", "/forms", "/entries", "/workflows", "/analytics"];
 
-            if (pathname === "/") {
+            if (restrictedPaths.includes(pathname)) {
                 return !!auth;
             }
 
