@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
 import { UserMenu } from "@/components/UserMenu";
 import { SidebarNav } from "@/components/SidebarNav";
 import { MobileNav } from "@/components/MobileNav";
 import { Separator } from "@/components/ui/separator";
+import { JsonForm } from "@/components/JsonForm";
 import { Code } from "bright";
 
 async function getForm(formId) {
@@ -68,7 +68,7 @@ export default async function ViewForm({ params }) {
                             {form && (
                                 <div>
                                     <Tabs defaultValue="preview">
-                                        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+                                        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-6">
                                             <div className="flex flex-col space-y-1.5">
                                                 <h1 className="text-2xl font-semibold leading-none tracking-tight">
                                                     {form.name}
@@ -83,25 +83,33 @@ export default async function ViewForm({ params }) {
                                                 <TabsTrigger value="uischema">UI Schema</TabsTrigger>
                                             </TabsList>
                                         </div>
-                                        <Separator className="my-6" />
                                         <TabsContent value="preview">
                                             <Card>
-                                                <CardHeader>
-                                                    <CardTitle>{form.name}</CardTitle>
-                                                    <CardDescription>{form.description}</CardDescription>
+                                                <CardHeader className="bg-slate-50">
+                                                    <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+                                                        <div className="flex flex-col space-y-1.5">
+                                                            <CardTitle>{form.name}</CardTitle>
+                                                            <CardDescription className="max-w-xl text-balance leading-relaxed">
+                                                                {form.description}
+                                                            </CardDescription>
+                                                        </div>
+                                                        <Button>
+                                                            <Link href={`/forms/${form.id}/edit`}>Edit</Link>
+                                                        </Button>
+                                                    </div>
                                                 </CardHeader>
-                                                <CardContent>
-                                                    <form>
-                                                        <Input placeholder="Store Name" />
-                                                    </form>
+                                                <Separator className="" />
+                                                <CardContent className="p-6">
+                                                    {form.schema && Object.keys(form.schema).length ? (
+                                                        <JsonForm schema={form.schema} uischema={form.uischema} />
+                                                    ) : (
+                                                        <p>Edit this form to begin adding fields.</p>
+                                                    )}
                                                 </CardContent>
-                                                <CardFooter className="border-t px-6 py-4">
-                                                    <Button>Save</Button>
-                                                </CardFooter>
                                             </Card>
                                         </TabsContent>
                                         <TabsContent value="schema">
-                                            <Code className="text-sm" lang="json">
+                                            <Code className="mt-0 text-sm" lang="json">
                                                 {JSON.stringify(form.schema, null, 2)}
                                             </Code>
                                         </TabsContent>
