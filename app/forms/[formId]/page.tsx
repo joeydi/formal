@@ -9,6 +9,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { SidebarNav } from "@/components/SidebarNav";
 import { MobileNav } from "@/components/MobileNav";
 import { Separator } from "@/components/ui/separator";
+import { Code } from "bright";
 
 async function getForm(formId) {
     const res = await fetch(`${process.env.NEXTAUTH_BACKEND_URL}/forms/${formId}/`);
@@ -23,6 +24,8 @@ async function getForm(formId) {
 
     return data;
 }
+
+Code.theme = "material-palenight";
 
 export default async function ViewForm({ params }) {
     const formId = params.formId;
@@ -61,9 +64,9 @@ export default async function ViewForm({ params }) {
                 </header>
                 <main className="flex flex-1 p-4 lg:p-6 justify-center">
                     {
-                        <div className="max-w-4xl">
+                        <div className="w-full max-w-4xl">
                             {form && (
-                                <>
+                                <div>
                                     <Tabs defaultValue="preview">
                                         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
                                             <div className="flex flex-col space-y-1.5">
@@ -77,6 +80,7 @@ export default async function ViewForm({ params }) {
                                             <TabsList>
                                                 <TabsTrigger value="preview">Preview</TabsTrigger>
                                                 <TabsTrigger value="schema">Schema</TabsTrigger>
+                                                <TabsTrigger value="uischema">UI Schema</TabsTrigger>
                                             </TabsList>
                                         </div>
                                         <Separator className="my-6" />
@@ -97,23 +101,17 @@ export default async function ViewForm({ params }) {
                                             </Card>
                                         </TabsContent>
                                         <TabsContent value="schema">
-                                            <div className="grid xl:grid-cols-2 gap-4">
-                                                <Card>
-                                                    <CardHeader>
-                                                        <CardTitle>Schema</CardTitle>
-                                                    </CardHeader>
-                                                    <CardContent>{JSON.stringify(form.schema)}</CardContent>
-                                                </Card>
-                                                <Card>
-                                                    <CardHeader>
-                                                        <CardTitle>UI Schema</CardTitle>
-                                                    </CardHeader>
-                                                    <CardContent>{JSON.stringify(form.uischema)}</CardContent>
-                                                </Card>
-                                            </div>
+                                            <Code className="text-sm" lang="json">
+                                                {JSON.stringify(form.schema, null, 2)}
+                                            </Code>
+                                        </TabsContent>
+                                        <TabsContent value="uischema">
+                                            <Code className="text-sm" lang="json">
+                                                {JSON.stringify(form.uischema, null, 2)}
+                                            </Code>
                                         </TabsContent>
                                     </Tabs>
-                                </>
+                                </div>
                             )}
                         </div>
                     }
