@@ -1,17 +1,7 @@
 "use server";
 
 import { signIn, signOut } from "@/auth";
-
-type FormState =
-    | {
-          errors?: {
-              email?: string[];
-              password?: string[];
-          };
-          message?: string;
-          redirect?: string;
-      }
-    | undefined;
+import { FormState } from "@/types/forms";
 
 export async function login(state: FormState, formData: FormData) {
     try {
@@ -21,14 +11,12 @@ export async function login(state: FormState, formData: FormData) {
             redirect: false,
         });
 
-        console.log({ result });
-
         return {
             redirect: result,
         };
     } catch (error) {
         return {
-            message: "There was an error logging in.",
+            error: "There was an error logging in.",
         };
     }
 }

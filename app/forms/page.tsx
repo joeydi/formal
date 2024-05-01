@@ -67,7 +67,7 @@ export default async function Forms() {
                     <UserMenu />
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-                    <div className="flex items-center">
+                    <div className="flex items-center min-h-16">
                         <h1 className="text-lg font-semibold md:text-2xl">Forms</h1>
                         <Button asChild className="ml-auto">
                             <Link href="/forms/add">Add Form</Link>
@@ -75,7 +75,7 @@ export default async function Forms() {
                     </div>
 
                     {forms && forms.length ? (
-                        forms.map((form) => <FormCard form={form} />)
+                        forms.map((form) => <FormCard key={form.id} form={form} />)
                     ) : (
                         <div
                             className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"

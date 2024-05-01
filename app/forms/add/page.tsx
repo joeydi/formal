@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { UserMenu } from "@/components/UserMenu";
 import { SidebarNav } from "@/components/SidebarNav";
 import { MobileNav } from "@/components/MobileNav";
-import { FormForm } from "@/components/FormForm";
+import { FormAddForm } from "@/components/FormAddForm";
 
 export default async function AddForm() {
     return (
@@ -41,7 +41,7 @@ export default async function AddForm() {
                 </header>
                 <main className="flex flex-1 p-4 lg:p-6 items-center justify-center">
                     <div className="w-1/2">
-                        <FormForm />
+                        <FormAddForm />
                     </div>
                 </main>
             </div>

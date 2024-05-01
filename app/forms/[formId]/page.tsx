@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Menu, Package2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserMenu } from "@/components/UserMenu";
 import { SidebarNav } from "@/components/SidebarNav";
@@ -93,7 +93,7 @@ export default async function ViewForm({ params }) {
                                                                 {form.description}
                                                             </CardDescription>
                                                         </div>
-                                                        <Button>
+                                                        <Button asChild>
                                                             <Link href={`/forms/${form.id}/edit`}>Edit</Link>
                                                         </Button>
                                                     </div>

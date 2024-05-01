@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { links } from "@/data/links";
+import { isActiveLink } from "@/lib/utils";
 
 export function SidebarNav() {
     const pathname = usePathname();
@@ -16,7 +17,7 @@ export function SidebarNav() {
                 <Link
                     key={link.href}
                     href={link.href}
-                    className={`${commonStyles} ${pathname === link.href ? activeStyles : inactiveStyles}`}>
+                    className={`${commonStyles} ${isActiveLink(link.href, pathname) ? activeStyles : inactiveStyles}`}>
                     {link.icon && <link.icon className="h-4 w-4" />}
                     {link.title}
                 </Link>

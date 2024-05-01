@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
+import { FormState } from "@/types/forms";
 import { create } from "@/actions/forms";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,16 +11,18 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
-export function FormForm() {
+export function FormAddForm() {
     const router = useRouter();
-    const [state, action] = useFormState(create, undefined);
+    const [formState, formAction] = useFormState<FormState, FormData>(create, {});
 
-    if (state?.id) {
-        return router.push(`/forms/${state.id}/edit`);
-    }
+    useEffect(() => {
+        if (formState?.success) {
+            return router.push(`/forms/${formState.success}/edit`);
+        }
+    }, [formState]);
 
     return (
-        <form action={action}>
+        <form action={formAction}>
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle className="text-2xl">Add a Form</CardTitle>
@@ -31,7 +35,7 @@ export function FormForm() {
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="description">Description</Label>
-                        <Textarea name="description" id="description" rows="2" />
+                        <Textarea name="description" id="description" rows={2} />
                     </div>
                 </CardContent>
                 <CardFooter>

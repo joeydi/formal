@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
 import { login } from "@/actions/auth";
+import { FormState } from "@/types/forms";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,30 +12,32 @@ import { Label } from "@/components/ui/label";
 
 export function LoginForm() {
     const router = useRouter();
-    const [state, action] = useFormState(login, undefined);
+    const [formState, formAction] = useFormState<FormState, FormData>(login, {});
 
-    if (state?.redirect) {
-        // Redirect the user to the callbackUrl param if present
-        if (state.redirect.indexOf("?") !== -1) {
-            const params = new URLSearchParams(state.redirect.split("?")[1]);
-            const callbackUrl = params.get("callbackUrl");
+    useEffect(() => {
+        if (formState?.redirect) {
+            // Redirect the user to the callbackUrl param if present
+            if (formState.redirect.indexOf("?") !== -1) {
+                const params = new URLSearchParams(formState.redirect.split("?")[1]);
+                const callbackUrl = params.get("callbackUrl");
 
-            if (callbackUrl) {
-                return router.push(callbackUrl);
+                if (callbackUrl) {
+                    return router.push(callbackUrl);
+                }
             }
-        }
 
-        // If the user came directly to the /login pages, redirect them to the homepage
-        if (state.redirect.indexOf("/login") !== -1) {
-            return router.push("/");
-        }
+            // If the user came directly to the /login pages, redirect them to the homepage
+            if (formState.redirect.indexOf("/login") !== -1) {
+                return router.push("/");
+            }
 
-        // Otherwise redirect to the URL
-        return router.push(state.redirect);
-    }
+            // Otherwise redirect to the URL
+            return router.push(formState.redirect);
+        }
+    }, [formState]);
 
     return (
-        <form action={action}>
+        <form action={formAction}>
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
@@ -52,8 +56,8 @@ export function LoginForm() {
                 <CardFooter>
                     <div className="w-full">
                         <Button className="w-full">Sign in</Button>
-                        {state?.message && (
-                            <CardDescription className="mt-4 text-center text-red-600">{state.message}</CardDescription>
+                        {formState?.message && (
+                            <CardDescription className="mt-4 text-center text-red-600">{formState.message}</CardDescription>
                         )}
                     </div>
                 </CardFooter>
