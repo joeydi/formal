@@ -38,7 +38,7 @@ export function FormEditForm({ initialData }: { initialData: Form }) {
                     </div>
                 </CardContent>
                 <CardFooter className="gap-4">
-                    <Button className="min-w-full">Save</Button>
+                    <Button className="min-w-36">Save</Button>
                     {formState?.error && <p className="text-red-600 text-sm">{formState.error}</p>}
                 </CardFooter>
             </Card>

@@ -5,8 +5,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserMenu } from "@/components/UserMenu";
-import { SidebarNav } from "@/components/SidebarNav";
-import { MobileNav } from "@/components/MobileNav";
+import { Sidebar } from "@/components/Sidebar";
+import { Header } from "@/components/Header";
 import { Separator } from "@/components/ui/separator";
 import { JsonForm } from "@/components/JsonForm";
 import { Code } from "bright";
@@ -33,58 +33,22 @@ export default async function ViewForm({ params }) {
 
     return (
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-            <div className="hidden border-r bg-muted/40 md:block">
-                <div className="flex h-full max-h-screen flex-col gap-2">
-                    <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-                        <Link href="/" className="flex items-center gap-2 font-semibold">
-                            <Package2 className="h-6 w-6" />
-                            <span className="">Informal</span>
-                        </Link>
-                    </div>
-                    <div className="flex-1">
-                        <SidebarNav />
-                    </div>
-                </div>
-            </div>
+            <Sidebar />
             <div className="flex flex-col">
-                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-                                <Menu className="h-5 w-5" />
-                                <span className="sr-only">Toggle navigation menu</span>
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent side="left" className="flex flex-col">
-                            <MobileNav />
-                        </SheetContent>
-                    </Sheet>
-                    <div className="w-full flex-1"></div>
-                    <UserMenu />
-                </header>
+                <Header />
                 <main className="flex flex-1 p-4 lg:p-6 justify-center">
                     {
                         <div className="w-full max-w-4xl">
                             {form && (
                                 <div>
                                     <Tabs defaultValue="preview">
-                                        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-6">
-                                            <div className="flex flex-col space-y-1.5">
-                                                <h1 className="text-2xl font-semibold leading-none tracking-tight">
-                                                    {form.name}
-                                                </h1>
-                                                <p className="text-sm text-muted-foreground max-w-xl text-balance leading-relaxed">
-                                                    {form.description}
-                                                </p>
-                                            </div>
-                                            <TabsList>
-                                                <TabsTrigger value="preview">Preview</TabsTrigger>
-                                                <TabsTrigger value="schema">Schema</TabsTrigger>
-                                                <TabsTrigger value="uischema">UI Schema</TabsTrigger>
-                                            </TabsList>
-                                        </div>
+                                        <TabsList>
+                                            <TabsTrigger value="preview">Preview</TabsTrigger>
+                                            <TabsTrigger value="schema">Schema</TabsTrigger>
+                                            <TabsTrigger value="uischema">UI Schema</TabsTrigger>
+                                        </TabsList>
                                         <TabsContent value="preview">
-                                            <Card>
+                                            <Card className="overflow-hidden">
                                                 <CardHeader className="bg-slate-50">
                                                     <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
                                                         <div className="flex flex-col space-y-1.5">
