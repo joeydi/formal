@@ -61,7 +61,6 @@ export function FormSchemaForm({ initialData }: { initialData: Form }) {
             <input type="hidden" name="schema" value={JSON.stringify(data.schema)} />
             <input type="hidden" name="uischema" value={JSON.stringify(data.uischema)} />
             <input type="hidden" name="id" value={initialData.id} />
-            <p>{JSON.stringify(data)}</p>
         </form>
     );
 }

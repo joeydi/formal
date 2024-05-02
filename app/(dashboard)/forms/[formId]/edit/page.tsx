@@ -22,8 +22,8 @@ export default async function EditForm({ params }) {
         <main className="flex p-4 lg:p-6 items-center justify-center">
             <div className="container mx-auto">
                 <Tabs defaultValue="settings">
-                    <div className="flex justify-between">
-                        <TabsList className="mb-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
+                        <TabsList>
                             <TabsTrigger value="settings">Settings</TabsTrigger>
                             <TabsTrigger value="schema">Schema</TabsTrigger>
                             <TabsTrigger value="confirmations">Confirmations</TabsTrigger>

@@ -31,24 +31,24 @@ export default async function ViewForm({ params }) {
                 {form && (
                     <div>
                         <Tabs defaultValue="preview">
-                            <TabsList>
-                                <TabsTrigger value="preview">Preview</TabsTrigger>
-                                <TabsTrigger value="schema">Schema</TabsTrigger>
-                                <TabsTrigger value="uischema">UI Schema</TabsTrigger>
-                            </TabsList>
+                            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
+                                <TabsList>
+                                    <TabsTrigger value="preview">Preview</TabsTrigger>
+                                    <TabsTrigger value="schema">Schema</TabsTrigger>
+                                    <TabsTrigger value="uischema">UI Schema</TabsTrigger>
+                                </TabsList>
+                                <Button asChild>
+                                    <Link href={`/forms/${form.id}/edit`}>Edit</Link>
+                                </Button>
+                            </div>
                             <TabsContent value="preview">
                                 <Card className="overflow-hidden">
                                     <CardHeader className="bg-slate-50">
-                                        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
-                                            <div className="flex flex-col space-y-1.5">
-                                                <CardTitle>{form.name}</CardTitle>
-                                                <CardDescription className="max-w-xl text-balance leading-relaxed">
-                                                    {form.description}
-                                                </CardDescription>
-                                            </div>
-                                            <Button asChild>
-                                                <Link href={`/forms/${form.id}/edit`}>Edit</Link>
-                                            </Button>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <CardTitle>{form.name}</CardTitle>
+                                            <CardDescription className="max-w-xl text-balance leading-relaxed">
+                                                {form.description}
+                                            </CardDescription>
                                         </div>
                                     </CardHeader>
                                     <Separator className="" />
