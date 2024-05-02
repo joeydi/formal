@@ -2,26 +2,25 @@
 
 import { ChangeEvent, useState } from "react";
 import { useFormState } from "react-dom";
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
+import { tokyoNightStorm } from "@uiw/codemirror-theme-tokyo-night-storm";
 import { Form, FormState } from "@/types/forms";
 import { edit } from "@/actions/forms";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
 export function FormSchemaForm({ initialData }: { initialData: Form }) {
     const [formState, formAction] = useFormState<FormState, FormData>(edit, {});
-
-    initialData.schema = JSON.stringify(initialData.schema);
-    initialData.uischema = JSON.stringify(initialData.uischema);
     const [data, setData] = useState(initialData);
 
-    const inputHandler = (e: ChangeEvent) => {
-        const target = e.currentTarget as HTMLInputElement;
-        if (target) {
-            setData({ ...data, [target.name]: target.value });
-        }
+    const onChangeSchema = (schema) => {
+        setData({ ...data, schema: JSON.parse(schema) });
+    };
+
+    const onChangeUISchema = (uischema) => {
+        setData({ ...data, uischema: JSON.parse(uischema) });
     };
 
     return (
@@ -33,11 +32,25 @@ export function FormSchemaForm({ initialData }: { initialData: Form }) {
                 <CardContent className="grid xl:grid-cols-2 items-start gap-4">
                     <div className="grid gap-2">
                         <Label htmlFor="email">Name</Label>
-                        <Textarea name="schema" id="schema" rows={12} value={data.schema} onChange={inputHandler} />
+                        <CodeMirror
+                            value={JSON.stringify(initialData.schema, null, 2)}
+                            width="100%"
+                            height="600px"
+                            theme={tokyoNightStorm}
+                            extensions={[json()]}
+                            onChange={onChangeSchema}
+                        />
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="description">Description</Label>
-                        <Textarea name="uischema" id="uischema" rows={12} value={data.uischema} onChange={inputHandler} />
+                        <CodeMirror
+                            value={JSON.stringify(initialData.uischema, null, 2)}
+                            width="100%"
+                            height="600px"
+                            theme={tokyoNightStorm}
+                            extensions={[json()]}
+                            onChange={onChangeUISchema}
+                        />
                     </div>
                 </CardContent>
                 <CardFooter className="gap-4">
@@ -45,7 +58,10 @@ export function FormSchemaForm({ initialData }: { initialData: Form }) {
                     {formState?.error && <p className="text-red-600 text-sm">{formState.error}</p>}
                 </CardFooter>
             </Card>
+            <input type="hidden" name="schema" value={JSON.stringify(data.schema)} />
+            <input type="hidden" name="uischema" value={JSON.stringify(data.uischema)} />
             <input type="hidden" name="id" value={initialData.id} />
+            <p>{JSON.stringify(data)}</p>
         </form>
     );
 }

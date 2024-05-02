@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codemirror/lang-json": "^6.0.1",
     "@jsonforms/core": "^3.2.1",
     "@jsonforms/react": "^3.2.1",
     "@jsonforms/vanilla-renderers": "^3.2.1",
@@ -20,6 +21,8 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@uiw/codemirror-theme-tokyo-night-storm": "^4.22.0",
+    "@uiw/react-codemirror": "^4.22.0",
     "axios": "^1.6.8",
     "bright": "^0.8.5",
     "class-variance-authority": "^0.7.0",
