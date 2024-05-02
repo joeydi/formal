@@ -10,8 +10,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
-export function FormEditForm({ initialData }: { initialData: Form }) {
+export function FormSchemaForm({ initialData }: { initialData: Form }) {
     const [formState, formAction] = useFormState<FormState, FormData>(edit, {});
+
+    initialData.schema = JSON.stringify(initialData.schema);
+    initialData.uischema = JSON.stringify(initialData.uischema);
     const [data, setData] = useState(initialData);
 
     const inputHandler = (e: ChangeEvent) => {
@@ -27,14 +30,14 @@ export function FormEditForm({ initialData }: { initialData: Form }) {
                 <CardHeader>
                     <CardTitle className="text-2xl">Form Basics</CardTitle>
                 </CardHeader>
-                <CardContent className="grid gap-4">
+                <CardContent className="grid xl:grid-cols-2 items-start gap-4">
                     <div className="grid gap-2">
                         <Label htmlFor="email">Name</Label>
-                        <Input required name="name" id="name" type="text" value={data.name} onChange={inputHandler} />
+                        <Textarea name="schema" id="schema" rows={12} value={data.schema} onChange={inputHandler} />
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="description">Description</Label>
-                        <Textarea name="description" id="description" rows={2} value={data.description} onChange={inputHandler} />
+                        <Textarea name="uischema" id="uischema" rows={12} value={data.uischema} onChange={inputHandler} />
                     </div>
                 </CardContent>
                 <CardFooter className="gap-4">

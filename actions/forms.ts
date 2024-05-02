@@ -31,7 +31,7 @@ export async function edit(currentState: FormState, formData: FormData) {
     let data = {};
 
     try {
-        await axios.put(`${process.env.NEXTAUTH_BACKEND_URL}/forms/${formData.get("id")}/`, formData);
+        await axios.patch(`${process.env.NEXTAUTH_BACKEND_URL}/forms/${formData.get("id")}/`, formData);
         data = {
             success: true,
         };
